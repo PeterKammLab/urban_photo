@@ -11,6 +11,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urban Landscapes - Petar Koljensic</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <style>
         body {
             margin: 0;
@@ -23,6 +25,11 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+	.map {
+            width: 100%;
+            height: 300px;
+            margin: 30px 0;
         }
         .profile-picture {
             width: 100%;
@@ -183,6 +190,10 @@
       		<p>Wherever I travel, I take my little camera to make shots of buildings, architecture, squares, places, streets, things, and people.</p>
       		<p>My idea is to capture the theory, physic, and spirit of cities.</p>
         </div>
+
+	<h2>City Map</h2>
+        <div id="map"></div>
+	    
         <div class="city-selection">
             <button data-city="hamburg">Hamburg</button>
             <button data-city="brussels">Brussels</button>
@@ -386,6 +397,31 @@
             <a href="https://www.linkedin.com/in/koljensic/" target="_blank">LinkedIn</a>
         </p>
     </footer>
+
+ 	<!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      const map = L.map('map', {
+        center: [48.2, 11.6],
+        zoom: 2,
+        zoomControl: false,
+        dragging: false,
+        scrollWheelZoom: false
+      });
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
+
+      const cities = {
+        hamburg: [53.5511, 9.9937],
+        brussels: [50.8503, 4.3517],
+        vienna:   [48.2082, 16.3738],
+        valencia: [39.4699, -0.3763],
+        dubai:    [25.2048, 55.2708]
+      };
+      Object.values(cities).forEach(coords =>
+        L.circleMarker(coords, { radius:6, color:'#fff', fillColor:'#fff', fillOpacity:1 }).addTo(map)
+      );
+    </script>
+
 
     <script>
         const cityButtons = document.querySelectorAll('.city-selection button');
